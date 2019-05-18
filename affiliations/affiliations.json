@@ -1,0 +1,79 @@
+{
+    "message": "Affiliation List",
+    "data": [{
+        "_id": "5b60339be4ff5694f584e26e",
+        "affiliation_name": "School of management",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6019fc9e32ba2669aa9f33",
+        "affiliation_name": "Graduate school of arts and sciences",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6019fc9e32ba2669aa9f35",
+        "affiliation_name": "School of architecture",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6019fc9e32ba2669aa9f37",
+        "affiliation_name": "School of art",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6019fc9e32ba2669aa9f39",
+        "affiliation_name": "Divinity School",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6019fc9e32ba2669aa9f3b",
+        "affiliation_name": "School of drama",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6019fc9e32ba2669aa9f3d",
+        "affiliation_name": "School of engineering and applied science",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6019fc9e32ba2669aa9f3f",
+        "affiliation_name": "law schools",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b60247b9e32ba2669aaa6d7",
+        "affiliation_name": "School of medicine",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b60247b9e32ba2669aaa6d9",
+        "affiliation_name": "School of music",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b60247b9e32ba2669aaa6db",
+        "affiliation_name": "School of nursing",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b60247b9e32ba2669aaa6dd",
+        "affiliation_name": "School of public health",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b60247b9e32ba2669aaa6df",
+        "affiliation_name": "Yale College",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b60247b9e32ba2669aaa6e1",
+        "affiliation_name": "Other",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }, {
+        "_id": "5b6024ce9e32ba2669aaa728",
+        "affiliation_name": "School of forestry and environmental studies",
+        "status": true,
+        "created_at": "2018-07-15T00:00:00.000Z"
+    }]
+}

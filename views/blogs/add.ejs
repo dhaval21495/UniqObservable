@@ -1,0 +1,115 @@
+<%layout('../layout')%>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Add New Blog</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <form id="addBlog" name="addBlog" role="form" method="post" onsubmit="return false">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Blog Title</label>
+                                        <input class="form-control" placeholder="Enter Title" name="blog_title" id="blog_title">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="true">Enabled</option>
+                                            <option value="false">Disabled</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-control" placeholder="Enter Description" name="blog_description" id="blog_description"> </textarea>                                        
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" name="save" value="Save">
+                                        <button type="button" class="btn btn-default" onclick="window.history.go('-1');">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </form>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#blog_description').summernote();
+            $("#addBlog").validate({
+                rules: {
+                    blog_title: {
+                        required: true,
+                        nameRegex:true
+                    },
+                    blog_description: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    blog_title: {
+                        required: "Enter a Blog Title"
+                    },
+                    blog_description: {
+                        required: "Blog Description is required",
+                    }
+                },
+                submitHandler: addBlog,
+            });
+
+            $.validator.addMethod("nameRegex", function (value, element) {
+                return this.optional(element) || /^[a-z0-9\,!@#$%& \s]+$/i.test(value);
+            }, "Blog name must contain only letters , number & ,!@#$%&");
+
+            function addBlog() {
+                $.ajax({
+                    url: "/admin/blogs/save",
+                    type: "POST",
+                    data: $("#addBlog").serialize(),
+                    success: function (data, status, jqXHR) {
+                        toastr.success(data.message, "Success");
+                        setTimeout(function () {
+                            window.location.href = '/admin/blogs/list';
+                        }, 1000);
+                    },
+                    error: function (jqXHR, status, err) {
+                        toastr.error(jqXHR.responseJSON.message, "Error");
+                    },
+                    complete: function (jqXHR, status) {
+                    }
+                });
+
+            }
+        });
+    </script>

@@ -1,0 +1,162 @@
+<%layout('../layout')%>
+    <style type="text/css">
+        .image_right {
+            width: 200px;
+            float: right
+        }
+    </style>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">User Details</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <% var name= UserData['name'].substr(0, 1).toUpperCase() + UserData['name'].substr(1)
+                             var user_id=UserData['_id'] %>
+                            <%= name %>'s Full Details
+                    </div>
+                    <div class="panel-body">
+                        <p class="image_right">
+                            <img src="/userImage/<%= UserData['profile_image'] %>" height="150" width="150"> </p>
+                        <p>
+                            <b>Email:</b>
+                            <%= UserData['email'] %>
+                        </p>
+                        <p>
+                            <b>Date Of Birth:</b>
+                            <%= UserData['date_of_birth'] %>
+                        </p>
+                        <p>
+                            <b>Gender:</b>
+                            <%= UserData['gender'] %>
+                        </p>
+                        <p>
+                            <b>Interested In:</b>
+                            <%= UserData['interested_in'] %>
+                        </p>
+                        <p>
+                            <b>Looking for:</b>
+                            <%= UserData['looking_for'] %>
+                        </p>
+                        <p>
+                            <b>Yale Affiliation:</b>
+                            <%= UserData['yale_affiliation']['affiliation_name'] %>
+                        </p>
+                        <p>
+                            <b>About
+                                <%= name %>:</b>
+                            <%= UserData['about_me'] %>
+                        </p>
+                        <p>
+                            <b>Account Creation Date:</b>
+                            <%= UserData['created_at'] %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="MatchedList">
+                                <thead>
+
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(MatchedList.length>0) { %>
+                                        <% for(var i=0; i<MatchedList.length;i++) { 
+                                                var name='';
+                                                var email='';
+                                                var image='';
+                                                var matched_id='';
+                                                var color='info';
+                                                if(MatchedList[i].user_like != user_id) {  
+                                                    name= MatchedList[i].user_id['name'];  email= MatchedList[i].user_id['email'];  image= MatchedList[i].user_id['profile_image'];
+                                                    matched_id= MatchedList[i].user_id['_id'];                                                    
+                                                }
+                                                else{ 
+                                                    name= MatchedList[i].partner_id['name'];  email= MatchedList[i].partner_id['email'];  image= MatchedList[i].partner_id['profile_image'];
+                                                    matched_id= MatchedList[i].partner_id['_id'];                                                        
+                                                     }
+                                                if(MatchedList[i].user_like != 0 && MatchedList[i].partner_like!=0){
+                                                        color='success';
+                                                    }    %>
+                                            <tr class="<%= color%>">
+                                                <td>
+                                                    <%= i+1 %>
+                                                </td>
+                                                <td>
+                                                    <%= name %>
+                                                </td>
+                                                <td>
+                                                    <img src="/userImage/<%= image%>" height="50" width="50">
+                                                </td>
+                                                <td>
+                                                    <%= email %>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/users/detail/<%= matched_id%>">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <% }
+                                                    } else { %>
+                                                <tr>
+                                                    <td colspan="5">
+                                                        No Matched User found.
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+    <script src="/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('table').dataTable({
+                responsive: true,
+                'aoColumnDefs': [{
+                    'bSortable': false,
+                    'aTargets': [-1] /* 1st one, start by the right */
+                }]
+            });
+
+        });
+    </script>
+
+    </body>
+
+    </html>

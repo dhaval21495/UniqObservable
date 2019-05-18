@@ -1,0 +1,333 @@
+<%layout('../layout')%>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Add New User</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <form id="userAdd" id="userAdd" method="post">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <div class="row">
+                                            <input type="hidden" name="profile_image" id="profile_image" />
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" placeholder="Enter Email" name="email" id="email">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" placeholder="Enter Email" name="email_host" id="email_host" value="@yale.edu" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter Name" name="name" id="name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Date Of Birth</label>
+                                        <input type="text" class="form-control" placeholder="Select Date Of Birth" name="date_of_birth" id="date_of_birth" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Gender</label>
+                                        <select class="form-control" name="gender" id="gender">
+                                            <option value="">-- Select --</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Interested In</label>
+                                        <select class="form-control" id="interested_in" name="interested_in">
+                                            <option value="">-- Select --</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Others</option>
+                                            <option value="All">All</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Looking for</label>
+                                        <select class="form-control" id="looking_for" name="looking_for">
+                                            <option value="">-- Select --</option>
+                                            <option value="Dating">Dating</option>
+                                            <option value="Friends">Friends</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Yale Affiliation</label>
+                                        <select class="form-control" name="yale_affiliation" id="yale_affiliation">
+                                            <option value="">-- Select --</option>
+                                            <% if(affiliation.length>0) { %>
+                                                <% for(var i=0; i<affiliation.length;i++) { %>
+                                                    <option value="<%= affiliation[i]._id%>">
+                                                        <%= affiliation[i].affiliation_name%>
+                                                    </option>
+                                                    <% }
+                                            } else { %>
+                                                        <option value="">-- Select --</option>
+                                                        <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>About Me</label>
+                                        <textarea class="form-control" rows="3" name="about_me" id="about_me"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" />
+                                        <span class="error" id="pwd_error"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Confirm Password</label>
+                                        <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Enter Confirm Password"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Profile Image</label>
+                                        <img src="/images/default-user.png" width="100" height="100" id="profile_img">
+                                        <input type="file" name="userfile" id="userfile" onchange="readURL(this);">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" id="btn_submit" name="save" value="Save">
+                                        <button type="button" class="btn btn-default" onclick="window.history.go('-1');">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </form>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+    <script>
+        $(document).ready(function () {
+
+            $('#email').on('input', function () {
+                $(this).val($(this).val().replace(/[^a-z0-9._]/gi, ''));
+            });
+
+            $('#date_of_birth').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+
+            $.validator.addMethod("nameRegex", function (value, element) {
+                return this.optional(element) || /^[a-z\s]+$/i.test(value);
+            }, "Enter a Valid Name");
+
+            $('#password').keyup(function () {
+                //  var pattern = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/
+                var pswd = $(this).val();
+                var val_pswd = $.trim($('#password').val());
+                //validate letter
+                if (pswd.length >= 6) {
+                    $("#btn_submit").prop("disabled", false);
+                    $('#pwd_error').html("");
+                    // if (pswd.match(/\d/)) {
+                    //     // if (pswd.match(/[$@\\#-/:-?{-~!"^_`\[\]]/)) {
+                    //         if (pswd.match(/[a-zA-Z]/)) {
+                    //             $("#btn_submit").prop("disabled", false);
+                    //             $('#pwd_error').html("");
+                    //         } else {
+                    //             $("#btn_submit").prop("disabled", true);
+                    //             $('#pwd_error').html(
+                    //                 "Enter a Combination of at least Six Numbers, Letters."
+                    //             );
+                    //         }
+                    //     // } else {
+                    //     //     $("#btn_submit").prop("disabled", true);
+                    //     //     $('#pwd_error').html(
+                    //     //         "Enter a Combination of at least Six Numbers, Letters and Special Characters."
+                    //     //     );
+                    //     // }
+                    // } else {
+                    //     $("#btn_submit").prop("disabled", true);
+                    //     $('#pwd_error').html(
+                    //         "Enter a Combination of at least Six Numbers, Letters."
+                    //     );
+                    // }
+                } else {
+                    $("#btn_submit").prop("disabled", true);
+                    $('#pwd_error').html(
+                        // "Enter a Combination of at least Six Numbers, Letters."
+                        "Enter atleast Six Characters."
+                    );
+                }
+            });
+            //
+            $("#userAdd").validate({
+                rules: {
+                    email: {
+                        required: true
+                    },
+                    name: {
+                        required: true,
+                        nameRegex: true
+                    },
+                    date_of_birth: {
+                        required: true,
+                    },
+                    gender: {
+                        required: true,
+                    },
+                    interested_in: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                        // accept: "[0-9a-zA-Z]+",
+                    },
+                    confirm_password: {
+                        required: true,
+                        equalTo: "#password"
+                    },
+                    looking_for: {
+                        required: true,
+                    },
+                    yale_affiliation: {
+                        required: true,
+                    },
+                    about_me: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    email: {
+                        required: "Enter an Email ID",
+                    },
+                    name: {
+                        required: "Enter a Name",
+                    },
+                    date_of_birth: {
+                        required: "Enter Your Date of Birth",
+                    },
+                    gender: {
+                        required: "Select a Gender",
+                    },
+                    interested_in: {
+                        required: "Select an Interested in",
+                    },
+                    password: {
+                        required: "Enter a Password.",
+                    },
+                    confirm_password: {
+                        required: "Confirm a Password",
+                        equalTo: "Passwords Don't Match",
+                    },
+                    looking_for: {
+                        required: "Select What Are You Looking For",
+                    },
+                    yale_affiliation: {
+                        required: "Select a Yale Affiliation",
+                    },
+                    about_me: {
+                        required: "Enter an About Me",
+                    },
+                },
+                submitHandler: userAdd,
+            });
+
+
+            function userAdd() {
+                $.ajax({
+                    url: "/admin/users/save",
+                    type: "POST",
+                    data: $("#userAdd").serialize(),
+                    success: function (data, status, jqXHR) {
+                        toastr.success(data.message, "Success");
+                        setTimeout(function () {
+                            window.location.href = '/admin/users/list';
+                        }, 1000);
+                    },
+                    error: function (jqXHR, status, err) {
+                        toastr.error(jqXHR.responseJSON.message, "Error");
+                    },
+                    complete: function (jqXHR, status) {}
+                });
+            }
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                name = input.files[0].name;
+                var _size = input.files[0].size;
+                if (_size > 5000000) {
+                    $("#btn_submit").prop("disabled", true);
+                    toastr.error('Image Size Should Be Of 5MB or Less', "Error");
+                } else {
+                    myArray = new Array("jpeg", "jpg", "png");
+
+                    var filename = name.split('\\').pop();
+                    var ext = filename.substr(filename.lastIndexOf('.') + 1)
+
+                    if ($.inArray(ext.toLowerCase(), myArray) !== -1) {
+                        $("#btn_submit").prop("disabled", false);
+                        let bacereader = new FileReader();
+                        if (event.target.files && event.target.files.length > 0) {
+                            let file = event.target.files[0];
+                            bacereader.readAsDataURL(file);
+                            bacereader.onload = (e) => {
+                                console.log(e.target.result);
+                                $('#profile_img').attr('src', e.target.result);
+                                $('#profile_image').attr('value', e.target.result);
+                            };
+                        }
+                    } else {
+                        $("#btn_submit").prop("disabled", true);
+                        toastr.error('Upload a Valid Image File', "Error");
+                    }
+                }
+            }
+        }
+    </script>

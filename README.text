@@ -1,0 +1,13 @@
+Clone Projetc From git clone https://jigar_sassy@bitbucket.org/jigar_sassy/ylist.git
+
+==> Start MongoDB Server
+
+==== Commands ====
+--> npm install
+--> nodemon ./bin/www localhost 3000
+
+==== PM2 ====
+--> pm2 list (list of pm2)
+--> pm2 start [server file name]app.jigar_sassy
+--> pm2 stop (id)
+--> pm2 monit (for moniter your server)

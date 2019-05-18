@@ -1,0 +1,93 @@
+<%layout('../layout')%>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">CMS List</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="CmsList">
+                                <thead>
+
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Title</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(cmsList.length>0) { %>
+                                        <% for(var i=0; i<cmsList.length;i++) { %>
+                                            <tr class="gradeA">
+                                                <td>
+                                                    <%= i+1 %>
+                                                </td>
+                                                <td>
+                                                    <%= cmsList[i].cms_title%>
+                                                </td>
+                                                <!-- <td>
+
+                                                    <% if(cmsList[i].status)
+                                                    { %>
+                                                        <i class="fa fa-check" aria-hidden="true"></i>
+
+                                                        <%}
+                                                    else{%>
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                            <% } %>
+                                                </td> -->
+                                                <td>
+                                                    <a href="/admin/cms/edit/<%= cmsList[i]._id%>">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a> 
+                                                </td>
+                                            </tr>
+
+                                            <% }
+                                                } else { %>
+                                                <tr>
+                                                    <td colspan="6">
+                                                        No CMS found.
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script src="/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('table').dataTable({
+                responsive: true,
+                'aoColumnDefs': [{
+                    'bSortable': false,
+                    'aTargets': [-1] /* 1st one, start by the right */
+                }]
+            });
+        });
+    </script>
+
+    </body>
+
+    </html>

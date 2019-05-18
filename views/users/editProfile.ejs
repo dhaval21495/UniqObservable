@@ -1,0 +1,102 @@
+<%layout('../layout')%>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Edit Profile</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- <div class="panel-heading">
+                        Basic Form Elements
+                    </div> -->
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <p class="form-control-static">admin@example.com</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input class="form-control" placeholder="Enter Name" name="name" id="name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Date Of Birth</label>
+                                    <input class="form-control" placeholder="Select Date Of Birth" name="date_of_birth" id="date_of_birth">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <select class="form-control" name="gender" id="gender">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>File input</label>
+                                    <img src="/images/default-user.png" width="100" height="100" id="profile_img">
+                                    <input type="file" name="userfile" id="userfile" onchange="readURL(this);">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-success" name="save" value="Save">
+                                    <button type="button" class="btn btn-default" onclick="window.history.go('-1');">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+    <script> 
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                name = input.files[0].name;
+                myArray = new Array("jpeg", "jpg", "png");
+
+                var filename = name.split('\\').pop();
+                var ext = filename.substr(filename.lastIndexOf('.') + 1)
+
+                if ($.inArray(ext.toLowerCase(), myArray) !== -1) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#profile_img').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+                else {
+                    swal("Invalid Filetype");
+                }
+            }
+        }
+    </script>

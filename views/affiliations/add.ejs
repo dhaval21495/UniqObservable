@@ -1,0 +1,106 @@
+<%layout('../layout')%>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Add New Affiliation</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <form id="addAffiliation" name="addAffiliation" role="form" method="post" onsubmit="return false">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Affiliation Name</label>
+                                        <input class="form-control" placeholder="Enter Title" name="affiliation_name" id="affiliation_name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="true">Enabled</option>
+                                            <option value="false">Disabled</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" name="save" value="Save">
+                                        <button type="button" class="btn btn-default" onclick="window.history.go('-1');">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </form>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+    <script>
+        $(document).ready(function () {
+
+            $("#addAffiliation").validate({
+                rules: {
+                    affiliation_name: {
+                        required: true,
+                        nameRegex: true
+                    },
+                    status: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    affiliation_name: {
+                        required: "Enter an Affiliation Name"
+                    },
+                    status: {
+                        required: "Status is required",
+                    }
+                },
+                submitHandler: addAffiliation,
+            });
+
+             $.validator.addMethod("nameRegex", function (value, element) {
+                return this.optional(element) || /^[a-z0-9\,& \s]+$/i.test(value);
+            }, "Affiliation name must contain only letters , number & space");
+
+            function addAffiliation() {
+                $.ajax({
+                    url: "/admin/affiliations/save",
+                    type: "POST",
+                    data: $("#addAffiliation").serialize(),
+                    success: function (data, status, jqXHR) {
+                        toastr.success(data.message, "Success");
+                        setTimeout(function () {
+                            window.location.href = '/admin/affiliations/list';
+                        }, 1000);
+                    },
+                    error: function (jqXHR, status, err) {
+                        toastr.error(jqXHR.responseJSON.message, "Error");
+                    },
+                    complete: function (jqXHR, status) {
+                    }
+                });
+
+            }
+        });
+    </script>

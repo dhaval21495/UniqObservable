@@ -1,0 +1,208 @@
+<%layout('../layout')%>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Users List</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="UsersList">
+                                <thead>
+
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>Name</th>
+                                        <th>Profile Image</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Yale Affiliation</th>
+                                        <th>Login Status</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if(userList.length>0) { %>
+                                        <% for(var i=0; i<userList.length;i++) { %>
+                                            <tr class="gradeA" id="user_<%= userList[i]._id%>">
+                                                <td>
+                                                    <%= i+1 %>
+                                                </td>
+                                                <td>
+                                                    <%= userList[i].name%>
+                                                </td>
+                                                <td>
+                                                    <img src="/userImage/<%= userList[i].profile_image%>" height="100" width="100"/>
+                                                </td>
+                                                <td>
+                                                    <%= userList[i].email%>
+                                                </td>
+                                                <td>
+                                                    <%= userList[i].gender%>
+                                                </td>
+                                                <td>
+                                                    <%= userList[i].yale_affiliation.affiliation_name%>
+                                                </td>
+                                                <td>
+                                                    <% if(userList[i].is_confirmed == true) { %>
+                                                        <a href="JavaScript:void(0);" onclick="changeStatus('<%= userList[i]._id%>',false)">Active</a>
+                                                    <% } else { %>
+                                                        <a href="JavaScript:void(0);" onclick="changeStatus('<%= userList[i]._id%>',true)">Inactive</a>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% if(userList[i].status == true) { %>
+                                                        <a href="JavaScript:void(0);" onclick="changeBlockUnblock('<%= userList[i]._id%>',false)" style="color: green">Unblocked</a>
+                                                    <% } else { %>
+                                                        <a href="JavaScript:void(0);" onclick="changeBlockUnblock('<%= userList[i]._id%>',true)" style="color: red">Blocked</a>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <a href="/admin/users/edit/<%= userList[i]._id%>">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <a class="deleteUser" onclick="deleteUser('<%= userList[i]._id%>')" data-id="<%= userList[i]._id%>">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                    <a href="/admin/users/detail/<%= userList[i]._id%>">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+
+                                            <% }
+                                                } else { %>
+                                                <tr>
+                                                    <td colspan="7">
+                                                        No Users found.
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script src="/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <script src="/js/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('table').dataTable({
+                responsive: true,
+                'aoColumnDefs': [{
+                    'bSortable': false,
+                    'aTargets': [-1] /* 1st one, start by the right */
+                }]
+            });
+        });
+        function deleteUser(id) {
+            // var id = $(this).attr('data-id');
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete this user!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: true
+            },
+                function () {
+                    $.ajax({
+                        url: "/admin/users/delete",
+                        type: "POST",
+                        data: { id: id },
+                        success: function (data, status, jqXHR) {
+                            toastr.success(data.message, "Success");
+                            $('table').DataTable().row($("#user_" + id)).remove().draw();
+                            $("#user_" + id).fadeOut('slow');
+                            // window.location.href = '/admin/users/list';
+                        },
+                        error: function (jqXHR, status, err) {
+                            toastr.error(jqXHR.responseJSON.message, "Error");
+                        },
+                        complete: function (jqXHR, status) {
+                        }
+                    });
+                });
+        }
+
+        function changeStatus(id, status) {
+            // var id = $(this).attr('data-id');
+            swal({
+                title: "Are you sure?",
+                text: "You want to change status!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, change it!",
+                closeOnConfirm: true
+            },
+            function () {
+                $.ajax({
+                    url: "/admin/users/change-status",
+                    type: "POST",
+                    data: { id: id , status: status},
+                    success: function (data, status, jqXHR) {
+                        toastr.success(data.message, "Success");
+                        window.location.href = '/admin/users/list';
+                    },
+                    error: function (jqXHR, status, err) {
+                        toastr.error(jqXHR.responseJSON.message, "Error");
+                    },
+                    complete: function (jqXHR, status) {
+                    }
+                });
+            });
+        }
+
+        function changeBlockUnblock(id, status) {
+                // var id = $(this).attr('data-id');
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to change status!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, change it!",
+                    closeOnConfirm: true
+                },
+                    function () {
+                        $.ajax({
+                            url: "/admin/users/change-block-unblock",
+                            type: "POST",
+                            data: { id: id, status: status },
+                            success: function (data, status, jqXHR) {
+                                toastr.success(data.message, "Success");
+                                window.location.href = '/admin/users/list';
+                            },
+                            error: function (jqXHR, status, err) {
+                                toastr.error(jqXHR.responseJSON.message, "Error");
+                            },
+                            complete: function (jqXHR, status) {
+                            }
+                        });
+                    });
+            }
+    </script>
+
+    </body>
+
+    </html>

@@ -1,0 +1,120 @@
+<%layout('../layout')%>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Edit Blog</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <form id="editBlog" name="editBlog" role="form" method="post" onsubmit="return false">
+            <div class="row">
+                <input type="hidden" id="blog_id" value="<%= BlogData['_id']%>">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Blog Title</label>
+                                        <input class="form-control" value="<%= BlogData['blog_title']%>" placeholder="Enter Title" name="blog_title" id="blog_title">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="true" <% if(BlogData[ 'status']){ %>
+                                                <%= 'selected="selected"'%>
+                                                    <% }%>>Enabled</option>
+                                            <option value="false" <% if(!BlogData[ 'status'] ){ %>
+                                                <%= 'selected="selected"'%>
+                                                    <% }%>>Disabled</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea class="form-control" placeholder="Enter Description" name="blog_description" id="blog_description">  <%= BlogData['blog_description'] %>  </textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-success" name="save" value="Update">
+                                        <button type="button" class="btn btn-default" onclick="window.history.go('-1');">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </form>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#blog_description').summernote();
+            $("#editBlog").validate({
+                rules: {
+                    blog_title: {
+                        required: true,
+                        nameRegex: true
+                    },
+                    blog_description: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    blog_title: {
+                        required: "Enter a Blog Title"
+                    },
+                    blog_description: {
+                        required: "Blog Description is required",
+                    }
+                },
+                submitHandler: editBlog,
+            });
+
+            $.validator.addMethod("nameRegex", function (value, element) {
+                return this.optional(element) || /^[a-z0-9\,!@#$%& \s]+$/i.test(value);
+            }, "Blog name must contain only letters , number & ,!@#$%&");
+
+            function editBlog() {
+                $.ajax({
+                    url: "/admin/blogs/update/" + $("#blog_id").val(),
+                    type: "POST",
+                    data: $("#editBlog").serialize(),
+                    success: function (data, status, jqXHR) {
+                        toastr.success(data.message, "Success");
+                        setTimeout(function () {
+                            window.location.href = '/admin/blogs/list';
+                        }, 1000);
+                    },
+                    error: function (jqXHR, status, err) {
+                        toastr.error(jqXHR.responseJSON.message, "Error");
+                    },
+                    complete: function (jqXHR, status) {
+                    }
+                });
+            }
+        });
+    </script>
