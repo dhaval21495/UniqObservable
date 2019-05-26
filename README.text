@@ -1,4 +1,4 @@
-Clone Projetc From git clone 
+Clone Projetc From git clone https://
 
 ==> Start MongoDB Server
 
@@ -8,6 +8,6 @@ Clone Projetc From git clone
 
 ==== PM2 ====
 --> pm2 list (list of pm2)
---> pm2 start [server file name]app
+--> pm2 start [server file name]app.
 --> pm2 stop (id)
 --> pm2 monit (for moniter your server)
