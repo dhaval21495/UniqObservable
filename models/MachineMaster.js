@@ -2,8 +2,16 @@ var mongoose = require("mongoose");
 var uniqueValidator = require("mongoose-unique-validator");
 // var mongoosePaginate = require("mongoose-paginate");
 
-var MachineSchema = new mongoose.Schema({
-      Mc_desc: {
+var MachineMasterSchema = new mongoose.Schema({
+      Comp_Code: {
+        type: String,
+        required: true
+      },
+      Mc_Id: {
+        type: String,
+        required: true
+      },
+      Mc_Desc: {
         type: String,
         required: true
       },
@@ -29,4 +37,4 @@ var MachineSchema = new mongoose.Schema({
       }
 });
 
-module.exports = mongoose.model('Machine',MachineSchema);
+module.exports = mongoose.model('UOB_Machine_Master',MachineMasterSchema);

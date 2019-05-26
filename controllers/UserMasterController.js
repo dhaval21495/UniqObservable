@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var Machine = require("../models/MachineMaster");
+var UserMaster = require("../models/UserMaster");
 var Matches = require("../models/Matches");
 var Reportuser = require("../models/Reportuser");
 const main_ids = require('../config/email_id');
@@ -12,11 +12,11 @@ var lodash = require('lodash');
 var moment = require('moment');
 var fs = require('fs');
 
-var machineController = {};
+var userMasterController = {};
 
-machineController.save = function (req, res) {
-    var test = new Machine(req.body);
-    test.save(function (err, data) {
+userMasterController.save = function (req, res) {
+    var test = new UserMaster(req.body);
+    test.save(function (err, testData) {
         if (err) {
             console.log(err);
             res.status(400).json({
@@ -25,111 +25,114 @@ machineController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Machine inserted succesfully",
-                data: data,
+                message: "User master inserted succesfully",
+                data: testData,
             });
         }
     });
 };
 
-//  get all machine
-machineController.list = function (req, res) {
-    Machine.find({}, function (err, data) {
+//  get all user master
+userMasterController.list = function (req, res) {
+    UserMaster.find({}, function (err, data) {
+        console.log(data);
         if (err) {
+            console.log(err);
             return res.status(400).json({
                 message: 'Error',
                 data: data,
             });
         } else {
             res.status(200).json({
-                data
+                message: 'user Master Data.',
+                data: data
             });
         }
     }).sort({ _id: -1 });
 
 };
-// get CompanyMaster By ID
-machineController.getMachineByID = function (req, res) {
+// get user Master By ID
+userMasterController.getUserMasterByID = function (req, res) {
     var id = req.params.id || null;
     if (id) {
-        getMachine(id, getMachineCallBack);
+        getUserMaster(id, getUserMasterCallBack);
     } else {
         res.status(400).json({
             message: 'id required.',
-            data: 'id'
+            data: ''
         });
     }
 
-    function getMachineCallBack(response) {
+    function getUserMasterCallBack(response) {
         if (response.error) {
             res.status(400).json({
-                message: 'Machine id required.',
+                message: 'user master id required.',
                 data: ''
             });
         } else {
             res.status(200).json({
-                message: 'Machine Data.',
+                message: 'User Master Data.',
                 data: response.data
             });
         }
     }
 };
-function getMachine(id, callback) {
-    Machine.findById(id, data);
-    function data(err, data) {
+function getUserMaster(id, callback) {
+    UserMaster.findById(id, test);
+    function test(err, test) {
         if (err) {
             return callback({
                 error: true,
                 data: err
             });
-        } else if (!data) {
+        } else if (!test) {
             return callback({
                 error: true,
-                data: "Machine not found."
+                data: "User master not found."
             });
         } else {
             return callback({
                 error: false,
-                data: data
+                data: test
             });
         }
     }
 }
 
 
-// update company mster
-machineController.update = function (req, res) {
+// update user mster
+userMasterController.update = function (req, res) {
     var id = req.params.id;
-    Machine.findByIdAndUpdate(id, req.body, (err, comapanymaster) => {
+    UserMaster.findByIdAndUpdate(id, req.body, (err, usermaster) => {
         if (err) {
             res.status(400).json({
                 message: err,
-                data: comapanymaster
+                data: usermaster
             });
         } else {
             res.status(200).json({
-                message: "Machine has been updated successfully",
-                data: comapanymaster
+                message: "User master has been updated successfully",
+                data: usermaster
             });
         }
     });
 };
-// delete company master
-machineController.delete = function (req, res) {
-    Machine.remove({ _id: req.params.id }, function (err, comapanymaster) {
+// delete user master
+userMasterController.delete = function (req, res) {
+    UserMaster.remove({ _id: req.params.id }, function (err, usermaster) {
         if (err) {
             return res.status(400).json({
                 message: 'Error',
-                data: comapanymaster,
+                data: usermaster,
             });
         } else {
             return res.status(200).json({
-                message: 'Machine has been deleted successfully',
-                data: comapanymaster,
+                message: 'User master has been deleted successfully',
+                data: usermaster,
             });
         }
     });
 
 };
 
-module.exports = machineController;
+module.exports = userMasterController;

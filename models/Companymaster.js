@@ -90,4 +90,4 @@ var ComapnyMasterSchema = new mongoose.Schema({
 });
 
 // ComapnyMasterSchema.plugin(mongoosePaginate);
-module.exports = mongoose.model('companyMasters',ComapnyMasterSchema);
+module.exports = mongoose.model('UOB_Company_Master',ComapnyMasterSchema);
