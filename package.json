@@ -17,7 +17,7 @@
     "debug": "~2.6.0",
     "ejs": "~2.5.5",
     "ejs-locals": "^1.0.2",
-    "express": "~4.14.1",
+    "express": "^4.14.1",
     "express-session": "^1.15.6",
     "express-toastr": "^2.0.2",
     "file-system": "^2.2.2",
