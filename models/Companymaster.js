@@ -27,10 +27,10 @@ var ComapnyMasterSchema = new mongoose.Schema({
         type: String,
         required: true
       },
-      Country: {
-        type: String,
-        required: true
-      },
+      // Country: {
+      //   type: String,
+      //   required: true
+      // },
       Comp_Email: {
         type: String,
         required: true
@@ -67,25 +67,21 @@ var ComapnyMasterSchema = new mongoose.Schema({
         type: String,
         required: true
       },
-      Active_YN: {
-        type: String,
-        required: true
-      },
+      // Active_YN: {
+      //   type: String,
+      //   required: true
+      // },
       Created_By: {
-        type: String,
-        required: true
+        type: String
       },
       Created_Dt: {
-        type: String,
-        required: true
+        type: String
       },
       Modify_By: {
-        type: String,
-        required: true
+        type: String
       },
       Modify_Dt: {
-        type: String,
-        required: true
+        type: String
       }
 });
 
