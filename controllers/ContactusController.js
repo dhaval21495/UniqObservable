@@ -21,7 +21,6 @@ contactController.send = function (req, res) {
     var contactus = new Contactus(req.body);
     contactus.save(function (err, contact) {
         if (err) {
-            console.log(err);
             res.status(400).json({
                 message: err,
                 data: '',

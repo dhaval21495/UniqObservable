@@ -1,12 +1,21 @@
 var mongoose = require("mongoose");
-var CompanyMaster = require("../models/Companymaster");
+var RoleMenu = require("../models/RoleMenu");
+var Matches = require("../models/Matches");
+var Reportuser = require("../models/Reportuser");
+const main_ids = require('../config/email_id');
 var passwordHash = require('password-hash');
 var jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+var dateFormat = require('dateformat');
+var multer = require('multer');
+var lodash = require('lodash');
+var moment = require('moment');
+var fs = require('fs');
 
-var companyMasterController = {};
+var roleMenuController = {};
 
-companyMasterController.save = function (req, res) {
-    var test = new CompanyMaster(req.body);
+roleMenuController.save = function (req, res) {
+    var test = new RoleMenu(req.body);
     test.save(function (err, testData) {
         if (err) {
             console.log(err);
@@ -16,17 +25,16 @@ companyMasterController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Company master inserted succesfully",
+                message: "Role menu inserted succesfully",
                 data: testData,
             });
         }
     });
 };
 
-//  get all company master
-companyMasterController.list = function (req, res) {
-    CompanyMaster.find({}, function (err, data) {
-        console.log(data);
+//  get role menu master
+roleMenuController.list = function (req, res) {
+    RoleMenu.find({}, function (err, data) {
         if (err) {
             console.log(err);
             return res.status(400).json({
@@ -35,18 +43,18 @@ companyMasterController.list = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: 'company Master Data.',
+                message: 'Role menu Data.',
                 data: data
             });
         }
     }).sort({ _id: -1 });
 
 };
-// get CompanyMaster By ID
-companyMasterController.getCompanyMasterByID = function (req, res) {
+// get role menu By ID
+roleMenuController.getRoleMenuByID = function (req, res) {
     var id = req.params.id || null;
     if (id) {
-        getCompanatMaster(id, getCompanyMasterCallBack);
+        getRoleMenu(id, getRoleMenuCallBack);
     } else {
         res.status(400).json({
             message: 'id required.',
@@ -54,22 +62,22 @@ companyMasterController.getCompanyMasterByID = function (req, res) {
         });
     }
 
-    function getCompanyMasterCallBack(response) {
+    function getRoleMenuCallBack(response) {
         if (response.error) {
             res.status(400).json({
-                message: 'Company master id required.',
+                message: 'Role menu id required.',
                 data: ''
             });
         } else {
             res.status(200).json({
-                message: 'company Master Data.',
+                message: 'Role menu Data.',
                 data: response.data
             });
         }
     }
 };
-function getCompanatMaster(id, callback) {
-    CompanyMaster.findById(id, test);
+function getRoleMenu(id, callback) {
+    RoleMenu.findById(id, test);
     function test(err, test) {
         if (err) {
             return callback({
@@ -79,7 +87,7 @@ function getCompanatMaster(id, callback) {
         } else if (!test) {
             return callback({
                 error: true,
-                data: "Company master not found."
+                data: "Role menu not found."
             });
         } else {
             return callback({
@@ -90,40 +98,39 @@ function getCompanatMaster(id, callback) {
     }
 }
 
-
-// update company mster
-companyMasterController.update = function (req, res) {
+// update role menu
+roleMenuController.update = function (req, res) {
     var id = req.params.id;
-    CompanyMaster.findByIdAndUpdate(id, req.body, (err, comapanymaster) => {
+    RoleMenu.findByIdAndUpdate(id, req.body, (err, rolemenu) => {
         if (err) {
             res.status(400).json({
                 message: err,
-                data: comapanymaster
+                data: rolemenu
             });
         } else {
             res.status(200).json({
-                message: "comapany master has been updated successfully",
-                data: comapanymaster
+                message: "Role menu has been updated successfully",
+                data: rolemenu
             });
         }
     });
 };
-// delete company master
-companyMasterController.delete = function (req, res) {
-    CompanyMaster.remove({ _id: req.params.id }, function (err, comapanymaster) {
+// delete role menu
+roleMenuController.delete = function (req, res) {
+    RoleMenu.remove({ _id: req.params.id }, function (err, rolemenu) {
         if (err) {
             return res.status(400).json({
                 message: 'Error',
-                data: comapanymaster,
+                data: rolemenu,
             });
         } else {
             return res.status(200).json({
-                message: 'comapnay master has been deleted successfully',
-                data: comapanymaster,
+                message: 'Role menu has been deleted successfully',
+                data: rolemenu,
             });
         }
     });
 
 };
 
-module.exports = companyMasterController;
+module.exports = roleMenuController;
