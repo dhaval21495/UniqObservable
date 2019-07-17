@@ -6,7 +6,7 @@ var cors = require('cors');
 module.exports = function (app) {
     app.use(cors());
     // add company master
-    app.post('/companymaster/addCompanyMaster',verifyJWT_MW, function (req, res) {
+    app.post('/companymaster/addCompanyMaster', function (req, res) {
         CompanyMaster.save(req, res);
     });
     // get all company master

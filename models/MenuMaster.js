@@ -3,10 +3,10 @@ var uniqueValidator = require("mongoose-unique-validator");
 // var mongoosePaginate = require("mongoose-paginate");
 
 var MenuMasterSchema = new mongoose.Schema({
-      Comp_Code: {
-        type: String,
-        required: true
-      },
+      // Comp_Code: {
+      //   type: String,
+      //   required: true
+      // },
       Menu_Type: {
         type: String,
         required: true
@@ -31,26 +31,22 @@ var MenuMasterSchema = new mongoose.Schema({
         type: String,
         required: true
       },
-      Password: {
-        type: String,
-        required: true
-      },
-      Created_By: {
-        type: String,
-        required: true
-      },
-      Created_Dt: {
-        type: String,
-        required: true
-      },
-      Modify_By: {
-        type: String,
-        required: true
-      },
-      Modify_Dt: {
-        type: String,
-        required: true
-      }
+      // Created_By: {
+      //   type: String,
+      //   required: true
+      // },
+      // Created_Dt: {
+      //   type: String,
+      //   required: true
+      // },
+      // Modify_By: {
+      //   type: String,
+      //   required: true
+      // },
+      // Modify_Dt: {
+      //   type: String,
+      //   required: true
+      // }
 });
 
 module.exports = mongoose.model('UOB_Menu_Master',MenuMasterSchema);
