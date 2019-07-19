@@ -64,6 +64,7 @@ app.use(cors());
 var users = require('./routes/users')(app);
 var companymaster = require('./routes/companymaster')(app);
 var codemaster = require('./routes/codemaster')(app);
+var codemaster = require('./routes/codetypemaster')(app);
 var machine = require('./routes/machine')(app);
 var machine = require('./routes/usermaster')(app);
 var machine = require('./routes/menumaster')(app);
