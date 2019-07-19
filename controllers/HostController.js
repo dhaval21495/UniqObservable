@@ -7,7 +7,7 @@ var transporter = nodemailer.createTransport({
     secure: false, // true for 465, false for other ports
     auth: {
         user: "the.y.list2018@gmail.com",
-        pass: "ruirui2018"
+        pass: "123456"
     }
 },
     {
@@ -35,10 +35,9 @@ hostController.list = function (req, res) {
 };
 
 hostController.mail = function (req, res) {
-
     console.log("HERE");
     var mailOptions = {
-        to: "testingkeyur@gmail.com", // list of receivers
+        to: "dhavalTesting@gmail.com", // list of receivers
         subject: "Confirm Account from new server last message", // Subject line
         text: "Confirm Your Account", // plaintext body
         html: "Test message " // html body
