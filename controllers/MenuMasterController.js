@@ -25,7 +25,7 @@ menuMasterController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Menu master inserted succesfully",
+                message: "Menu master inserted successfully",
                 data: testData,
             });
         }

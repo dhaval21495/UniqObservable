@@ -25,7 +25,7 @@ userMasterController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "User master inserted succesfully",
+                message: "User master inserted successfully",
                 data: testData,
             });
         }

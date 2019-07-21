@@ -25,7 +25,7 @@ roleMenuController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Role menu inserted succesfully",
+                message: "Role menu inserted successfully",
                 data: testData,
             });
         }

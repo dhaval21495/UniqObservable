@@ -25,7 +25,7 @@ machineController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Machine inserted succesfully",
+                message: "Machine inserted successfully",
                 data: data,
             });
         }

@@ -16,7 +16,7 @@ codeMasterController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Code master inserted succesfully",
+                message: "Code master inserted successfully",
                 data: testData,
             });
         }

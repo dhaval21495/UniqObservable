@@ -16,7 +16,7 @@ companyMasterController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Company master inserted succesfully",
+                message: "Company master inserted successfully",
                 data: testData,
             });
         }

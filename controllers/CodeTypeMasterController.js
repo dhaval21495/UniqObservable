@@ -15,7 +15,7 @@ codeTypeMasterController.save = function (req, res) {
             });
         } else {
             res.status(200).json({
-                message: "Code type master inserted succesfully",
+                message: "Code type master inserted successfully",
                 data: testData,
             });
         }
@@ -39,6 +39,7 @@ codeTypeMasterController.list = function (req, res) {
     }).sort({ _id: -1 });
 
 };
+
 // get Code type Master By ID
 codeTypeMasterController.getCodeTypeMasterByID = function (req, res) {
     var id = req.params.id || null;
@@ -65,6 +66,7 @@ codeTypeMasterController.getCodeTypeMasterByID = function (req, res) {
         }
     }
 };
+
 function getCodeTypeMaster(id, callback) {
     CodeTypeMaster.findById(id, test);
     function test(err, test) {
@@ -104,6 +106,7 @@ codeTypeMasterController.update = function (req, res) {
         }
     });
 };
+
 // delete code type master
 codeTypeMasterController.delete = function (req, res) {
     CodeTypeMaster.remove({ _id: req.params.id }, function (err, codetypemaster) {
