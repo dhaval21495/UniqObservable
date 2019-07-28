@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-var UserMaster = require("../models/UserMaster");
+var ConfigMerge = require("../models/ConfigMerge");
 var Matches = require("../models/Matches");
 var Reportuser = require("../models/Reportuser");
 const main_ids = require('../config/email_id');
@@ -12,50 +12,48 @@ var lodash = require('lodash');
 var moment = require('moment');
 var fs = require('fs');
 
-var userMasterController = {};
+var configMergeController = {};
 
-userMasterController.save = function (req, res) {
-    var test = new UserMaster(req.body);
+configMergeController.save = function (req, res) {
+    var test = new ConfigMerge(req.body);
     test.save(function (err, testData) {
         if (err) {
-            console.log(err);
             res.status(400).json({
                 message: err,
                 data: '',
             });
         } else {
             res.status(200).json({
-                message: "User master inserted successfully",
+                message: "Config merege inserted successfully",
                 data: testData,
             });
         }
     });
 };
 
-//  get all user master
-userMasterController.list = function (req, res) {
-    UserMaster.find({}, function (err, data) {
-        console.log(data);
+//  get all Config merege
+configMergeController.list = function (req, res) {
+    ConfigMerge.find({}, function (err, data) {
+        console.log(err);
         if (err) {
-            console.log(err);
             return res.status(400).json({
                 message: 'Error',
                 data: data,
             });
         } else {
             res.status(200).json({
-                message: 'user Master Data.',
+                message: 'Config merege Data.',
                 data: data
             });
         }
     }).sort({ _id: -1 });
 
 };
-// get user Master By ID
-userMasterController.getUserMasterByID = function (req, res) {
+// get Config merege By ID
+configMergeController.getConfigMergeByID = function (req, res) {
     var id = req.params.id || null;
     if (id) {
-        getUserMaster(id, getUserMasterCallBack);
+        getConfigMerge(id, getConfigMergeCallBack);
     } else {
         res.status(400).json({
             message: 'id required.',
@@ -63,22 +61,22 @@ userMasterController.getUserMasterByID = function (req, res) {
         });
     }
 
-    function getUserMasterCallBack(response) {
+    function getConfigMergeCallBack(response) {
         if (response.error) {
             res.status(400).json({
-                message: 'user master id required.',
+                message: 'Config merege id required.',
                 data: ''
             });
         } else {
             res.status(200).json({
-                message: 'User Master Data.',
+                message: 'Config merege Data.',
                 data: response.data
             });
         }
     }
 };
-function getUserMaster(id, callback) {
-    UserMaster.findById(id, test);
+function getConfigMerge(id, callback) {
+    ConfigMerge.findById(id, test);
     function test(err, test) {
         if (err) {
             return callback({
@@ -88,7 +86,7 @@ function getUserMaster(id, callback) {
         } else if (!test) {
             return callback({
                 error: true,
-                data: "User master not found."
+                data: "Config merege not found."
             });
         } else {
             return callback({
@@ -100,40 +98,39 @@ function getUserMaster(id, callback) {
 }
 
 
-// update user mster
-userMasterController.update = function (req, res) {
+// update Config merege
+configMergeController.update = function (req, res) {
     var id = req.params.id;
-    UserMaster.findByIdAndUpdate(id, req.body, (err, usermaster) => {
+    ConfigMerge.findByIdAndUpdate(id, req.body, (err, configmerge) => {
         if (err) {
             res.status(400).json({
                 message: err,
-                data: usermaster
+                data: configmerge
             });
         } else {
             res.status(200).json({
-                message: "User master has been updated successfully",
-                data: usermaster
+                message: "Config merege has been updated successfully",
+                data: configmerge
             });
         }
     });
 };
-
-// delete user master
-userMasterController.delete = function (req, res) {
-    UserMaster.remove({ _id: req.params.id }, function (err, usermaster) {
+// delete Config merege
+configMergeController.delete = function (req, res) {
+    ConfigMerge.remove({ _id: req.params.id }, function (err, configmerge) {
         if (err) {
             return res.status(400).json({
                 message: 'Error',
-                data: usermaster,
+                data: configmerge,
             });
         } else {
             return res.status(200).json({
-                message: 'User master has been deleted successfully',
-                data: usermaster,
+                message: 'Config merege has been deleted successfully',
+                data: configmerge,
             });
         }
     });
 
 };
 
-module.exports = userMasterController;
+module.exports = configMergeController;

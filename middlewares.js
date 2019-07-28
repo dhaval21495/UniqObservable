@@ -7,7 +7,7 @@ module.exports = function verifyJWT_MW(req, res, next) {
             next()
         })
         .catch((err) => {
-            console.log(err);
+            console.log("Eeror :- "+err);
             res.status(400)
                 .json({
                     message: "Invalid auth token provided.",

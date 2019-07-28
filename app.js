@@ -68,6 +68,8 @@ var codemaster = require('./routes/codetypemaster')(app);
 var machine = require('./routes/machine')(app);
 var machine = require('./routes/usermaster')(app);
 var machine = require('./routes/menumaster')(app);
+var machine = require('./routes/machinemapping')(app);
+var machine = require('./routes/configmerge')(app);
 
 var affiliation = require('./routes/affiliation')(app);
 var auth = require('./routes/auth')(app);
@@ -85,6 +87,7 @@ var adminContact = require('./routes/admin/contacts')(app);
 var adminHosts = require('./routes/admin/hosts')(app);
 
 // catch 404 and forward to error handler
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

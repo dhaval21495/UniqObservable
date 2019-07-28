@@ -10,7 +10,7 @@ module.exports = function (app) {
         CompanyMaster.save(req, res);
     });
     // get all company master
-    app.get('/companymaster/allCompanyMaster', function (req, res) {
+    app.get('/companymaster/allCompanyMaster', verifyJWT_MW, function (req, res) {
         CompanyMaster.list(req, res);
     });
     //  get company master
