@@ -10,7 +10,7 @@ module.exports = function (app) {
         ConfigMerge.save(req, res);
     });
     // get all config merge
-    app.get('/configmerge/allConfigMergeg', function (req, res) {
+    app.get('/configmerge/allConfigMerge', function (req, res) {
         ConfigMerge.list(req, res);
     });
     //  get config merge
