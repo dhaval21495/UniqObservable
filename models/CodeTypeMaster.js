@@ -3,14 +3,14 @@ var uniqueValidator = require("mongoose-unique-validator");
 // var mongoosePaginate = require("mongoose-paginate");
 
 var CodeTypeMasterSchema = new mongoose.Schema({
-      Comp_Code: {
-        type: String,
-        required: true
-      },
-      Code_Id: {
-        type: String,
-        required: true
-      },
+      // Comp_Code: {
+      //   type: String,
+      //   required: true
+      // },
+      // Code_Id: {
+      //   type: String,
+      //   required: true
+      // },
       Code_Type: {
         type: String,
         required: true
